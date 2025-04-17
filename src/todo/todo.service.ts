@@ -15,5 +15,14 @@ export class TodoService {
         return newTodo.save();
     } 
 
+    getTodos()
+    {
+        return this.todoModel.find();
+    }
+
+    getTodoById(id: string)
+    {
+        return this.todoModel.findById(id);
+    }
 
 }
