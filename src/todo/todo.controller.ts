@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateTodoDto } from './dtos/create-todo.dto';
 import { TodoService } from './todo.service';
 import mongoose from 'mongoose';
@@ -41,9 +41,20 @@ export class TodoController {
         if(!updatedTodo)
         {
             throw new HttpException('Todo not found', 404);
-
         }
         return updatedTodo;
+    }
+
+    @Delete(':id')
+    async deleteTodo(@Param('id') id : string){
+        const isValid = mongoose.Types.ObjectId.isValid(id);
+        if(!isValid) throw new HttpException('Invalid ID', 404);
+        const deletedTodo = await this.todoService.deleteTodo(id);
+        if(!deletedTodo)
+        {
+            throw new HttpException('Todo not found', 404);
+        }
+        return {message : 'Todo Deleted Successfully'};
     }
 
 

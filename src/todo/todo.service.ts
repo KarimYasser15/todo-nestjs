@@ -31,4 +31,9 @@ export class TodoService {
         return this.todoModel.findByIdAndUpdate(id, updateTodoDto, {new: true});
     }
 
+    deleteTodo(id:string)
+    {
+        return this.todoModel.findByIdAndDelete(id);
+    }
+
 }
